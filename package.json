@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "dev": "nodemon server"
+    "dev": "npx nodemon server",
+    "lint": "npx eslint src",
+    "lint:fix": "npx eslint src --fix"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,10 @@
   },
   "homepage": "https://github.com/ProskurinV/node-posts#readme",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "eslint": "^8.30.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.20",
+    "npx": "^10.2.2"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
