@@ -1,29 +1,13 @@
-const {v4: uuidv4} = require('uuid');
+const ObjectId = require('mongodb').ObjectId;
 
-let posts = [
-  {
-    id: uuidv4(),
-    title: 'Hello1',
-    text: 'test text1',
-  },
-  {
-    id: uuidv4(),
-    title: 'Hello2',
-    text: 'test text2',
-  },
-  {
-    id: uuidv4(),
-    title: 'Hello3',
-    text: 'test text3',
-  },
-];
-
-const getPosts = (req, res) => {
-  res.json({posts, status: 'success'});
+const getPosts = async (req, res) => {
+  const posts = await req.db.Posts.find({}).toArray();
+  res.json({posts});
 };
 
-const getPostById = (req, res) => {
-  const [post] = posts.filter((item) => item.id === req.params.id);
+const getPostById = async (req, res) => {
+  const {id} = req.params;
+  const post = await req.db.Posts.findOne({_id: new ObjectId(id)});
   if (!post) {
     return res.status(400).json({
       status: 'No post found',
@@ -32,47 +16,28 @@ const getPostById = (req, res) => {
   res.json({post, status: 'succsess'});
 };
 
-const addPost = (req, res) => {
+const addPost = async (req, res) => {
   const {title, text} = req.body;
 
-  posts.push({
-    id: uuidv4(),
-    title,
-    text,
-  });
+  await req.db.Posts.insert({title, text});
+
+  res.json({status: 'success'});
+};
+
+const changePost = async (req, res) => {
+  const {title, text} = req.body;
+
+  await req.db.Posts.updateOne(
+      {_id: new ObjectId(req.params.id)},
+      {$set: {title, text}},
+  );
+
   res.json({status: 'succsess'});
 };
 
-const changePost = (req, res) => {
-  const {title, text} = req.body;
+const deletePost = async (req, res) => {
+  await req.db.Posts.deleteOne({_id: new ObjectId(req.params.id)});
 
-  posts.forEach((post) => {
-    if (post.id === req.params.id) {
-      post.title = title;
-      post.text = text;
-    }
-  });
-  res.json({status: 'succsess'});
-};
-
-const patchPost = (req, res) => {
-  const {title, text} = req.body;
-
-  posts.forEach((post) => {
-    if (post.id === req.params.id) {
-      if (title) {
-        post.title = title;
-      }
-      if (text) {
-        post.text = text;
-      }
-    }
-  });
-  res.json({status: 'succsess'});
-};
-
-const deletePost = (req, res) => {
-  posts = posts.filter((item) => item.id !== req.params.id);
   res.json({status: 'succsess'});
 };
 
@@ -81,6 +46,5 @@ module.exports = {
   getPostById,
   addPost,
   changePost,
-  patchPost,
   deletePost,
 };
