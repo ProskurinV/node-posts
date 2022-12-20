@@ -22,10 +22,7 @@
   },
   "homepage": "https://github.com/ProskurinV/node-posts#readme",
   "devDependencies": {
-    "eslint": "^8.30.0",
-    "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.20",
-    "npx": "^3.0.0"
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
@@ -33,7 +30,6 @@
     "joi": "^17.7.0",
     "mongodb": "^4.12.1",
     "mongoose": "^6.8.0",
-    "morgan": "^1.10.0",
-    "uuid": "^9.0.0"
+    "morgan": "^1.10.0"
   }
 }

@@ -15,15 +15,6 @@ app.use(express.json());
 
 app.use("/api/posts", postsRouter);
 
-// app.use((req, res, next, error) => {
-//   res.status(500).json({
-//     status: "fail",
-//     code: 500,
-//     message: error.message,
-//     data: "Internal Server Error",
-//   });
-// });
-
 app.use((_, res, __) => {
   res.status(404).json({
     status: "error",

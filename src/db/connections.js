@@ -1,15 +1,7 @@
-const MongoClient = require('mongodb').MongoClient;
-const collections = {};
-
-const getCollections = () => {
-  return collections;
-};
+const mongoose = require("mongoose");
 
 const connectMongo = async () => {
-  const client = await MongoClient.connect(process.env.DB_HOST);
-  const db = client.db();
-
-  collections.Posts = db.collection('posts');
+  return mongoose.connect(process.env.DB_HOST);
 };
 
-module.exports = {connectMongo, getCollections};
+module.exports = { connectMongo };
