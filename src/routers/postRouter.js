@@ -1,5 +1,3 @@
-/* eslint-disable object-curly-spacing */
-/* eslint-disable quotes */
 const express = require("express");
 const router = new express.Router();
 
